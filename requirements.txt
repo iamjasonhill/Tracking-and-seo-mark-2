@@ -6,3 +6,6 @@ celery
 redis
 pydantic[email]
 pydantic-settings
+passlib[bcrypt]
+pytest
+httpx
