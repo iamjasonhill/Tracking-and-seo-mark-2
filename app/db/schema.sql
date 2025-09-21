@@ -8,7 +8,7 @@ CREATE TABLE accounts (
   id SERIAL PRIMARY KEY,
   user_id INT REFERENCES users(id),
   provider TEXT CHECK (provider IN ('google', 'bing')),
-  credentials JSONB -- encrypted
+  credentials TEXT -- Fernet encrypted payload
 );
 
 CREATE TABLE sites (
