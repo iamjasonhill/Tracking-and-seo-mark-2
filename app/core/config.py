@@ -1,4 +1,5 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "SEO Data Sync Platform"
@@ -7,8 +8,15 @@ class Settings(BaseSettings):
     # In a production environment, this should be set via an environment variable.
     DATABASE_URL: str = "postgresql://user:password@localhost/dbname"
 
-    class Config:
-        case_sensitive = True
-        env_file = ".env"
+    # Celery configuration defaults for local development. Override these values
+    # via environment variables in production deployments.
+    CELERY_BROKER_URL: str = "redis://localhost:6379/0"
+    CELERY_RESULT_BACKEND: str = "redis://localhost:6379/0"
+    CELERY_TIMEZONE: str = "UTC"
+    DAILY_SYNC_HOUR: int = 2
+    DAILY_SYNC_MINUTE: int = 0
+
+    model_config = SettingsConfigDict(case_sensitive=True, env_file=".env")
+
 
 settings = Settings()

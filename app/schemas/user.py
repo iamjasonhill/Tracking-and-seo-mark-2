@@ -1,4 +1,6 @@
-from pydantic import BaseModel, EmailStr
+from typing import Optional
+
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 class UserBase(BaseModel):
     email: EmailStr
@@ -6,8 +8,13 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     password: str
 
+
+class UserUpdate(BaseModel):
+    email: Optional[EmailStr] = None
+    password: Optional[str] = None
+
+
 class User(UserBase):
     id: int
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
